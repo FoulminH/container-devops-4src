@@ -18,7 +18,7 @@ RUN if [ "$ENV" = "dev" ]; then \
     fi
 
 
-# ------------ Builder Stage: copy code and config ------------
+## builder stage##---------------------------
 FROM base AS builder
 
 COPY . .
@@ -29,7 +29,7 @@ COPY jest.config.js ./
 COPY tests ./tests
 COPY tests/setup.js ./tests/setup.js
 
-# ------------ Dev stage -------------------
+## dev stage ##--------------------------------
 FROM builder AS dev
 
 RUN apt update && apt install -y libcurl4 && rm -rf /var/lib/apt/lists/*
@@ -38,7 +38,7 @@ EXPOSE 3002
 CMD ["npm", "run", "dev"]
 
 
-# ------------ Production stage ------------
+## production stage ##--------------------------
 FROM node:alpine3.22 AS prod
 
 USER node

@@ -38,6 +38,19 @@ services:
       - "3000:3000"
     depends_on:
       - services-db
+  frontend:
+    build:
+      target: prod
+      args:
+        - VITE_PRODUCT_SERVICE_URL=http://product-service:3000
+        - VITE_AUTH_SERVICE_URL=http://auth-service:3001
+        - VITE_ORDER_SERVICE_URL=http://order-service:3002
+      context: ./frontend
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
   services-db:
     image: mongo:6
     volumes:

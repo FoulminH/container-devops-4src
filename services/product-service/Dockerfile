@@ -17,22 +17,20 @@ RUN if [ "$ENV" = "dev" ]; then \
       npm install --omit=dev; \
     fi
 
-
-# ------------ Builder Stage: copy code and config ------------
+## builder stage##---------------------------
 FROM base AS builder
 
 COPY . .
-
-# Dev/test specific files (only copied if ENV=dev)
-ARG ENV
-COPY jest.config.js ./
-COPY tests ./tests
-COPY tests/jest.setup.js ./tests/jest.setup.js
 
 # ------------ Dev stage -------------------
 FROM builder AS dev
 
 RUN apt update && apt install libcurl4 -y
+
+ARG ENV
+COPY jest.config.js ./
+COPY tests ./tests
+COPY tests/jest.setup.js ./tests/jest.setup.js
 
 EXPOSE 3000
 CMD ["npm", "run", "dev"]

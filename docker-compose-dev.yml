@@ -1,0 +1,52 @@
+services:
+  auth-service:
+    build:
+      target: dev
+      args:
+        - ENV=dev
+      context: ./services/auth-service
+      dockerfile: Dockerfile
+    env_file:
+      - ./services/auth-service/.env
+    ports:
+      - "3001:3001"
+    depends_on:
+      - services-db
+  order-service:
+    build:
+      target: dev
+      args:
+        - ENV=dev
+      context: ./services/order-service
+      dockerfile: Dockerfile
+    env_file:
+      - ./services/order-service/.env
+    ports:
+      - "3002:3002"
+    depends_on:
+      - services-db
+  product-service:
+    build:
+      target: dev
+      args:
+        - ENV=dev
+      context: ./services/product-service
+      dockerfile: Dockerfile
+    env_file:
+      - ./services/product-service/.env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - services-db
+  
+  services-db:
+    image: mongo:6
+    volumes:
+      - services_data:/data/db
+    ports:
+      - "27017:27017"
+
+volumes:
+  auth_data:
+  order_data:
+  services_data:

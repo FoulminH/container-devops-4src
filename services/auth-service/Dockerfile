@@ -39,14 +39,16 @@ CMD ["npm", "run", "dev"]
 
 
 # ------------ Production stage ------------
-FROM node:18-alpine AS prod
+FROM node:alpine3.22 AS prod
+
+USER node
 
 WORKDIR /app
 
 # Copy only production files
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/src ./src
+COPY --chown=node:node --from=builder /app/package*.json ./
+COPY --chown=node:node --from=builder /app/node_modules ./node_modules
+COPY --chown=node:node --from=builder /app/src ./src
 
 ENV NODE_ENV=production
 EXPOSE 3001

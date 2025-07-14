@@ -41,6 +41,7 @@ EXPOSE 8080
 CMD [ "npm", "run", "dev"]
 
 ## production stage ##--------------------------
+## FIX ME: TRY TO RUN AS NGINX (reverse proxy for backend api ??)
 FROM node:alpine3.22 AS prod
 
 USER node

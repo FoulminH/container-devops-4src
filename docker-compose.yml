@@ -46,7 +46,7 @@ services:
         - VITE_AUTH_SERVICE_URL=http://auth-service:3001
         - VITE_ORDER_SERVICE_URL=http://order-service:3002
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     env_file:
       - .env
     ports:
